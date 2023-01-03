@@ -5,6 +5,7 @@ import data from './data.js'
 import Col from './component.js'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js';
+import axios from 'axios';
 
 function App() {
   let [shoes, setShoes] = useState(data)
@@ -41,7 +42,7 @@ function App() {
                     {shoes.map(function (item, i) {
                       return (
                         <Col
-                          url={shoes[i].jpg}
+                          url={'https://codingapple1.github.io/shop/shoes' + (i+1) + '.jpg'}
                           title={shoes[i].title}
                           price={shoes[i].price}
                         />
@@ -49,10 +50,33 @@ function App() {
                     })}
                   </div>
                 </div>
+
+                <button onClick={()=>{
+                  axios.get('https://codingapple1.github.io/shop/data2.json')
+                  .then(((data)=>{
+                    
+                    //console.log(shoes)
+                    //console.log(data.data)
+
+                    for(let i=0; i<data.data.length;i++)
+                    {
+                      let obj = {'id' : data.data[i].id, 'title':data.data[i].title, 'content':data.data[i].content,
+                       'price': data.data[i].price }
+                      shoes.push(obj)
+                    }
+
+                    let copy = [...shoes]
+                      setShoes(copy)
+
+                    console.log(shoes)
+                  }))
+                  .catch(()=>{
+                    //console.log("으악")
+                  })
+                }}>버튼</button>
               </div>
             </>
-          }
-        />
+          }/>
 
 
         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
