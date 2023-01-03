@@ -3,10 +3,12 @@ import './App.css'
 import { useState } from 'react'
 import data from './data.js'
 import Col from './component.js'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
+import Detail from './pages/Detail.js';
 
 function App() {
   let [shoes] = useState(data)
+  let navigate = useNavigate();
 
   return (
     <div className="App">
@@ -14,19 +16,15 @@ function App() {
         <Container>
           <Navbar.Brand href="#home">Shop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate(1)}}>Home</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail')}}>Detail</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
 
-      <Link to="/">홈</Link>
-      <Link to="/detail">상세페이지</Link>
 
       <Routes>
-        <Route
-          path="/"
-          element={
+        <Route path="/" element={
             <>
               <div className="main-bg"></div>
               <div>
@@ -48,29 +46,37 @@ function App() {
             </>
           }
         />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail" element={<Detail shoes={shoes} />} />
+
+        <Route path="/event" element={<Event/>}>
+          <Route path="one" element={<>첫 주문시 양배추즙 서비스</>}/>
+          <Route path="two" element={<>생일기념 쿠폰받기</>}/>
+        </Route>
+
+        <Route path="/about" element={<About/>}>
+          <Route path="memeber" element={<div>멤버임</div>}/>
+          <Route path="location" element={<div>위치정보임</div>}/>
+        </Route>
       </Routes>
+
     </div>
   )
 }
 
-function Detail() {
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-6">
-          <img
-            src="https://codingapple1.github.io/shop/shoes1.jpg"
-            width="100%"
-          />
-        </div>
-        <div className="col-md-6">
-          <h4 className="pt-5">상품명</h4>
-          <p>상품설명</p>
-          <p>120000원</p>
-          <button className="btn btn-danger">주문하기</button>
-        </div>
-      </div>
+function Event(){
+  return(
+    <div>
+      <h4>오늘의 이벤트</h4>
+      <Outlet></Outlet>
+    </div>
+  )
+}
+
+function About(){
+  return(
+    <div>
+      <h4>회사정보임</h4>
+      <Outlet></Outlet>
     </div>
   )
 }
