@@ -58,7 +58,7 @@ function App() {
         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
 
         <Route path="/event" element={<Event/>}>
-          <Route path="one" element={<>첫 주문시 양배추즙 서비스</>}/>
+          <Route path="one" element={<h1>첫 주문시 양배추즙 서비스</h1>}/>
           <Route path="two" element={<>생일기념 쿠폰받기</>}/>
         </Route>
 

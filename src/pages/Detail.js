@@ -14,9 +14,9 @@ function Detail(props) {
       setTimeout(()=>{
         setWarning(0)},2000);
   
-      // setTimeout(()=>{
-      //   setWarning(1)},1000);
-    });
+      setTimeout(()=>{
+        setWarning(1)},2000);
+    },[]);
 
     let {id} = useParams();
 
