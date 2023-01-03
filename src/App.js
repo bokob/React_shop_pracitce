@@ -7,7 +7,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js';
 
 function App() {
-  let [shoes] = useState(data)
+  let [shoes, setShoes] = useState(data)
   let navigate = useNavigate();
 
   return (
@@ -22,6 +22,13 @@ function App() {
         </Container>
       </Navbar>
 
+      {/* <button onClick={()=>{
+        let copy = [...shoes]
+        console.log('정렬 전' + copy.title);
+        copy.title.sort();
+        console.log("정렬됨");
+        console.log('정렬 후' + copy.title);
+      }}>가나다 정렬</button> */}
 
       <Routes>
         <Route path="/" element={
@@ -46,7 +53,9 @@ function App() {
             </>
           }
         />
-        <Route path="/detail" element={<Detail shoes={shoes} />} />
+
+
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
 
         <Route path="/event" element={<Event/>}>
           <Route path="one" element={<>첫 주문시 양배추즙 서비스</>}/>
@@ -57,6 +66,7 @@ function App() {
           <Route path="memeber" element={<div>멤버임</div>}/>
           <Route path="location" element={<div>위치정보임</div>}/>
         </Route>
+
       </Routes>
 
     </div>
