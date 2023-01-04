@@ -1,6 +1,6 @@
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import data from './data.js'
 import Col from './component.js'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
@@ -10,6 +10,7 @@ import axios from 'axios';
 function App() {
   let [shoes, setShoes] = useState(data)
   let navigate = useNavigate();
+  let [loading, setLoading] = useState(0)
 
   return (
     <div className="App">
@@ -79,7 +80,8 @@ function App() {
           }/>
 
 
-        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        <Route path="/detail/:id" element={<LoadDetail loading={loading}/>} /> */
+        {/* <Route path="/detail/:id" element={<Detail/>} /> */}
 
         <Route path="/event" element={<Event/>}>
           <Route path="one" element={<h1>첫 주문시 양배추즙 서비스</h1>}/>
@@ -95,6 +97,23 @@ function App() {
 
     </div>
   )
+
+  function LoadDetail(loading){
+    let [fade, setFade] = useState('')
+  
+    useEffect(()=>{
+      let a = setTimeout(()=>{setFade('end')}, 10)
+  
+      return ()=>{
+        clearTimeout(a)
+        setFade('')
+      }
+  
+    },[loading])
+
+    return(<div className={'start ' + fade}>
+      {<Detail shoes={shoes} />}</div>)
+  }
 }
 
 function Event(){
