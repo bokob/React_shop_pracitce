@@ -2,11 +2,13 @@ import { useParams } from "react-router-dom";
 import data from '../data.js';
 import styled from "styled-components";
 import React, { useEffect, useState} from "react";
+import {Nav} from 'react-bootstrap';
 
 function Detail(props) {
 
   let [alert1, setAlert] = useState(true)
   let [count, setCount] = useState('')
+  let [탭, 탭변경] = useState(0)
   
   useEffect(()=>{
       setTimeout(()=>{
@@ -53,8 +55,45 @@ function Detail(props) {
             <button className="btn btn-danger">주문하기</button>
           </div>
         </div>
+        <Nav variant="tabs"  defaultActiveKey="link0">
+          <Nav.Item>
+            <Nav.Link eventKey="link0" onClick={
+              ()=>{탭변경(0)}
+            }>버튼0</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link1" onClick={
+              ()=>{탭변경(1)}
+            }>버튼1</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link2" onClick={
+              ()=>{탭변경(2)}
+            }>버튼2</Nav.Link>
+          </Nav.Item>
+      </Nav>
+
+      <TabContent 탭={탭}/>
       </div>
     )
   }
+
+  function TabContent({탭}){
+    
+    let [fade, setFade] = useState('')
+
+    useEffect(()=>{
+      let a = setTimeout(()=>{setFade('end')}, 10)
+      
+      return ()=>{
+        setFade('')
+      }
+    }, [탭])
+
+    return (<div className={'start ' + fade}>
+      {[<div className="">내용0</div>, <div>내용1</div>, <div>내용2</div>][탭]}
+    </div>)
+      
+}
 
   export default Detail;
