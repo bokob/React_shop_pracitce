@@ -1,14 +1,18 @@
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createContext } from 'react'
 import data from './data.js'
 import Col from './component.js'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js';
 import axios from 'axios';
 
+export let Context1 = createContext()
+
+
 function App() {
   let [shoes, setShoes] = useState(data)
+  let [재고] = useState([10, 11, 12])
   let navigate = useNavigate();
   let [loading, setLoading] = useState(0)
 
@@ -80,7 +84,12 @@ function App() {
           }/>
 
 
-        <Route path="/detail/:id" element={<LoadDetail loading={loading}/>} /> */
+        <Route path="/detail/:id" element={
+          <Context1.Provider value={{재고}}>
+            <Detail shoes={shoes}/>
+          </Context1.Provider>
+        }/>
+
         {/* <Route path="/detail/:id" element={<Detail/>} /> */}
 
         <Route path="/event" element={<Event/>}>
@@ -97,23 +106,6 @@ function App() {
 
     </div>
   )
-
-  function LoadDetail(loading){
-    let [fade, setFade] = useState('')
-  
-    useEffect(()=>{
-      let a = setTimeout(()=>{setFade('end')}, 10)
-  
-      return ()=>{
-        clearTimeout(a)
-        setFade('')
-      }
-  
-    },[loading])
-
-    return(<div className={'start ' + fade}>
-      {<Detail shoes={shoes} />}</div>)
-  }
 }
 
 function Event(){
