@@ -20,12 +20,14 @@ function Cart() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{a[0].id}</td>
-            <td>{a[0].name}</td>
-            <td>{a[0].count}</td>
-            <td>안녕</td>
-          </tr>
+          {a.map((element, i) => (
+            <tr key={i}>
+              <td>{a[i].id}</td>
+              <td>{a[i].name}</td>
+              <td>{a[i].count}</td>
+              <td>안녕</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>
