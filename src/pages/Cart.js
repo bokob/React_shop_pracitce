@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux'
 
 function Cart() {
   let a = useSelector((state) => {
-    return state
+    return state.itemInfo
   })
 
-  console.log(a.user)
+  console.log(a)
 
   return (
     <div>
@@ -21,9 +21,9 @@ function Cart() {
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>안녕</td>
-            <td>안녕</td>
+            <td>{a[0].id}</td>
+            <td>{a[0].name}</td>
+            <td>{a[0].count}</td>
             <td>안녕</td>
           </tr>
         </tbody>
