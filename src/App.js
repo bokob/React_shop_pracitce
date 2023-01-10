@@ -16,6 +16,11 @@ function App() {
   let navigate = useNavigate()
   let [loading, setLoading] = useState(0)
 
+  useEffect(() => {
+    if (!localStorage.getItem('watched'))
+      localStorage.setItem('watched', JSON.stringify([]))
+  }, [])
+
   return (
     <div className="App">
       <Navbar bg="primary" variant="dark">
@@ -35,6 +40,13 @@ function App() {
               }}
             >
               Detail
+            </Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate('/cart')
+              }}
+            >
+              Cart
             </Nav.Link>
           </Nav>
         </Container>
