@@ -1,12 +1,15 @@
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import './App.css'
-import { useEffect, useState, createContext } from 'react'
+import { Suspense, lazy, useEffect, useState, createContext } from 'react'
 import data from './data.js'
 import Col from './component.js'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
-import Detail from './pages/Detail.js'
+
 import axios from 'axios'
-import Cart from './pages/Cart.js'
+import { useQuery } from '@tanstack/react-query'
+
+const Detail = lazy(() => import('./pages/Detail.js'))
+const Cart = lazy(() => import('./pages/Cart.js'))
 
 export let Context1 = createContext()
 
@@ -20,6 +23,14 @@ function App() {
     if (!localStorage.getItem('watched'))
       localStorage.setItem('watched', JSON.stringify([]))
   }, [])
+
+  let result = useQuery('작명', () => {
+    return axios
+      .get('https://codingapple1.github.io/userdata.json')
+      .then((a) => {
+        return a.data
+      })
+  })
 
   return (
     <div className="App">
@@ -49,6 +60,7 @@ function App() {
               Cart
             </Nav.Link>
           </Nav>
+          {/*<Nav>{result.isLoading ? '로딩중' : result.data.name}</Nav>*/}
         </Container>
       </Navbar>
 

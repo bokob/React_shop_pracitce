@@ -2,11 +2,12 @@ import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeName, plusAge } from './../store/userSlice'
 import { addCount } from './../store.js'
+import { useState, memo, useMemo } from 'react'
 
 function Cart() {
   let state = useSelector((state) => state)
-  console.log(state)
   let dispatch = useDispatch()
+  let [count, setCount] = useState(0)
 
   useDispatch()
 
